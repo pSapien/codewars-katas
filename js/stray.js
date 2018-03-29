@@ -23,7 +23,7 @@ function stray(nums) {
 }
 
 //REFACTORED
-const isNumInArr = (max, nums) => max === nums[0] && max === nums[1];
+const isNumInArr = (num, numsArr) => num === numsArr[0] && num === numsArr[1];
 
 const stray = nums => {
   const max = Math.max(...nums);

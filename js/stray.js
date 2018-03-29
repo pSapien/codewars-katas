@@ -22,6 +22,16 @@ function stray(nums) {
   return maxNum;
 }
 
+//REFACTORED
+const isNumInArr = (max, nums) => max === nums[0] && max === nums[1];
+
+const stray = nums => {
+  const max = Math.max(...nums);
+  const min = Math.min(...nums);
+
+  return isNumInArr(max, nums) ? min : max;
+};
+
 //ELEGANT SOLUTION
 
 const nums = () => nums.reduce((a, b) => a ^ b);

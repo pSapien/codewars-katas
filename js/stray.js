@@ -11,18 +11,6 @@
 
 \*** ===================================================================== ***/
 
-//MY SOLUTION
-
-function stray(nums) {
-  const maxNum = Math.max(...nums);
-  const minNum = Math.min(...nums);
-
-  if (maxNum === nums[0] && maxNum === nums[1]) return minNum;
-
-  return maxNum;
-}
-
-//REFACTORED
 const isNumInArr = (num, numsArr) => num === numsArr[0] && num === numsArr[1];
 
 const stray = nums => {

@@ -25,6 +25,8 @@
 
 \*** ===================================================================== ***/
 
+// WORKING ON IT
+
 function parseMolecule(formula) {
   const seperatedAtoms = seperateAtoms(formula);
 

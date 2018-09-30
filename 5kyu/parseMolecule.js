@@ -33,14 +33,6 @@ function parseMolecule(formula) {
   const atomsArr = seperatedAtoms.split('');
   const obj = {};
 
-  // for (let i = 0; i < atomsArr.length; i++) {
-  //   const current = atomsArr[i];
-  //   const next = atomsArr[i + 1];
-
-  //   if (isNumber(next)) obj[current] = Number(next);
-  //   if (typeof next === 'undefined') obj[current] = 1;
-  // }
-
   return obj;
 }
 

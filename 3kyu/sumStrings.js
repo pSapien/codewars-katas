@@ -34,4 +34,4 @@ function sumStrings(a, b) {
   return total;
 }
 
-const removeStartingZero = number => number.slice(1, number.length);
+const removeStartingZero = str => str.slice(1, str.length);

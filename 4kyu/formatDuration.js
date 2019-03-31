@@ -37,10 +37,78 @@
 
 \*** ===================================================================== ***/
 
-function formatDuration(seconds) {}
+const DAYS = 365,
+  HOURS = 24,
+  MINUTES = 60,
+  SECONDS = 60;
+
+// parse the time into hours, minutes and seconds.
+function formatDuration(seconds) {
+  console.log(timesInAlpahbets(parseTime(seconds)));
+  return timesInAlpahbets(parseTime(seconds));
+}
+
+function timesInAlpahbets(time) {
+  return time
+    .map(t => {
+      const { value, word, addExtra } = t;
+
+      if (value === 1) {
+        if (addExtra) {
+          return `${addExtra} ${value} ${word}`;
+        }
+        return `${value} ${word}`;
+      }
+
+      if (value > 1) {
+        if (addExtra) {
+          return `${addExtra} ${value} ${word}s`;
+        }
+        return `${value} ${word}s`;
+      }
+    })
+    .filter(x => x)
+    .join(',');
+}
+
+function parseTime(time) {
+  const years = Math.floor(time / (DAYS * HOURS * MINUTES * SECONDS));
+  const yearInMs = years * DAYS * HOURS * MINUTES * SECONDS;
+
+  const days = Math.floor((time - yearInMs) / (HOURS * MINUTES * SECONDS));
+  const daysInMs = days * HOURS * MINUTES * SECONDS;
+
+  const hours = Math.floor((time - yearInMs - daysInMs) / (MINUTES * SECONDS));
+  const hoursInMs = hours * MINUTES * SECONDS;
+
+  const minutes = Math.floor(
+    (time - yearInMs - daysInMs - hoursInMs) / SECONDS
+  );
+  const minutesInMs = minutes * SECONDS;
+
+  const seconds = Math.floor(
+    time - yearInMs - daysInMs - hoursInMs - minutesInMs
+  );
+
+  return [
+    { value: years, word: 'year' },
+    { value: days, word: 'day' },
+    { value: hours, word: 'hour' },
+    { value: minutes, word: 'minute' },
+    {
+      value: seconds,
+      word: 'second',
+      addExtra: years || days || hours || minutes ? 'and' : '',
+    },
+  ];
+}
 
 console.log(formatDuration(1) === '1 second');
 console.log(formatDuration(62) === '1 minute and 2 seconds');
 console.log(formatDuration(120) === '2 minutes');
 console.log(formatDuration(3600) === '1 hour');
 console.log(formatDuration(3662) === '1 hour, 1 minute and 2 seconds');
+console.log(
+  formatDuration(205851834) ===
+    '6 years, 192 days, 13 hours, 3 minutes and 54 seconds'
+);

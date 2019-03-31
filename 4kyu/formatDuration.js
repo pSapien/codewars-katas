@@ -42,69 +42,70 @@ const DAYS = 365,
   MINUTES = 60,
   SECONDS = 60;
 
-const SINGULAR_TIME_STRINGS = ['year', 'day', 'hour', 'minute', 'second'];
+const createMap = obj => {
+  const timeStrValueMap = new Map();
 
-// parse the time into hours, minutes and seconds.
-function formatDuration(seconds) {
-  if (seconds === 0) return 'now';
+  for (let key in obj) {
+    timeStrValueMap.set(key, obj[key]);
+  }
 
-  return mapTimesWithAlphabets(parseTime(seconds));
-}
+  return timeStrValueMap;
+};
+
+const getSingularOrPluralTimeWithStr = (str, val) =>
+  `${val} ${str}${val > 1 ? 's' : ''}`;
+
+const formatDuration = seconds =>
+  seconds === 0 ? 'now' : mapTimesWithAlphabets(parseTime(seconds));
 
 function mapTimesWithAlphabets(time) {
-  const withoutSeconds = time
-    .map((t, idx) => {
-      const isSecond = idx === 4;
-      if (!isSecond && t > 0) {
-        return `${t} ${SINGULAR_TIME_STRINGS[idx]}${t > 1 ? 's' : ''}`;
-      }
-    })
-    .filter(x => x)
+  const timeMap = createMap(time);
+
+  const allKeys = Array.from(timeMap.keys());
+  const allValues = Array.from(timeMap.values());
+
+  const lastKey = allKeys.pop();
+  const lastValue = allValues.pop();
+
+  const lastKeyValueTimeDenote = getSingularOrPluralTimeWithStr(
+    lastKey,
+    lastValue
+  );
+
+  if (allKeys.length === 0 && allValues.length === 0) {
+    return lastKeyValueTimeDenote;
+  }
+
+  const allTimeDenoteMinusLast = allKeys
+    .map(key => getSingularOrPluralTimeWithStr(key, timeMap.get(key)))
     .join(', ');
 
-  const withSeconds =
-    time[4] > 0
-      ? `${time[4]} ${SINGULAR_TIME_STRINGS[4]}${time[4] > 1 ? 's' : ''}`
-      : '';
-
-  if (withoutSeconds.length === 0) return withSeconds;
-  if (withSeconds.length === 0) return withoutSeconds;
-
-  return `${withoutSeconds} and ${withSeconds}`;
+  return `${allTimeDenoteMinusLast} and ${lastKeyValueTimeDenote}`;
 }
 
+// optimize this, look sloppy.
 function parseTime(time) {
-  const years = Math.floor(time / (DAYS * HOURS * MINUTES * SECONDS));
-  const yearInMs = years * DAYS * HOURS * MINUTES * SECONDS;
+  const { floor: fl } = Math;
 
-  const days = Math.floor((time - yearInMs) / (HOURS * MINUTES * SECONDS));
-  const daysInMs = days * HOURS * MINUTES * SECONDS;
+  const year = fl(time / (DAYS * HOURS * MINUTES * SECONDS));
+  const yearInMs = year * DAYS * HOURS * MINUTES * SECONDS;
 
-  const hours = Math.floor((time - yearInMs - daysInMs) / (MINUTES * SECONDS));
-  const hoursInMs = hours * MINUTES * SECONDS;
+  const day = fl((time - yearInMs) / (HOURS * MINUTES * SECONDS));
+  const daysInMs = day * HOURS * MINUTES * SECONDS;
 
-  const minutes = Math.floor(
-    (time - yearInMs - daysInMs - hoursInMs) / SECONDS
-  );
-  const minutesInMs = minutes * SECONDS;
+  const hour = fl((time - yearInMs - daysInMs) / (MINUTES * SECONDS));
+  const hoursInMs = hour * MINUTES * SECONDS;
 
-  const seconds = Math.floor(
-    time - yearInMs - daysInMs - hoursInMs - minutesInMs
-  );
+  const minute = fl((time - yearInMs - daysInMs - hoursInMs) / SECONDS);
+  const minutesInMs = minute * SECONDS;
 
-  return [years, days, hours, minutes, seconds];
+  const second = fl(time - yearInMs - daysInMs - hoursInMs - minutesInMs);
+
+  return {
+    ...(year && { year }),
+    ...(day && { day }),
+    ...(hour && { hour }),
+    ...(minute && { minute }),
+    ...(second && { second }),
+  };
 }
-
-console.log(
-  formatDuration(132030240) === '4 years, 68 days, 3 hours and 4 minutes'
-);
-// console.log(formatDuration(1) === '1 second');
-// console.log(formatDuration(62) === '1 minute and 2 seconds');
-// console.log(formatDuration(120));
-// console.log(formatDuration(120) === '2 minutes');
-// console.log(formatDuration(3600) === '1 hour');
-// console.log(formatDuration(3662) === '1 hour, 1 minute and 2 seconds');
-// console.log(
-//   formatDuration(205851834) ===
-//     '6 years, 192 days, 13 hours, 3 minutes and 54 seconds'
-// );

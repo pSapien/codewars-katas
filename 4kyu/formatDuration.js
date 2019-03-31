@@ -42,33 +42,35 @@ const DAYS = 365,
   MINUTES = 60,
   SECONDS = 60;
 
+const SINGULAR_TIME_STRINGS = ['year', 'day', 'hour', 'minute', 'second'];
+
 // parse the time into hours, minutes and seconds.
 function formatDuration(seconds) {
-  console.log(timesInAlpahbets(parseTime(seconds)));
-  return timesInAlpahbets(parseTime(seconds));
+  if (seconds === 0) return 'now';
+
+  return mapTimesWithAlphabets(parseTime(seconds));
 }
 
-function timesInAlpahbets(time) {
-  return time
-    .map(t => {
-      const { value, word, addExtra } = t;
-
-      if (value === 1) {
-        if (addExtra) {
-          return `${addExtra} ${value} ${word}`;
-        }
-        return `${value} ${word}`;
-      }
-
-      if (value > 1) {
-        if (addExtra) {
-          return `${addExtra} ${value} ${word}s`;
-        }
-        return `${value} ${word}s`;
+function mapTimesWithAlphabets(time) {
+  const withoutSeconds = time
+    .map((t, idx) => {
+      const isSecond = idx === 4;
+      if (!isSecond && t > 0) {
+        return `${t} ${SINGULAR_TIME_STRINGS[idx]}${t > 1 ? 's' : ''}`;
       }
     })
     .filter(x => x)
-    .join(',');
+    .join(', ');
+
+  const withSeconds =
+    time[4] > 0
+      ? `${time[4]} ${SINGULAR_TIME_STRINGS[4]}${time[4] > 1 ? 's' : ''}`
+      : '';
+
+  if (withoutSeconds.length === 0) return withSeconds;
+  if (withSeconds.length === 0) return withoutSeconds;
+
+  return `${withoutSeconds} and ${withSeconds}`;
 }
 
 function parseTime(time) {
@@ -90,25 +92,19 @@ function parseTime(time) {
     time - yearInMs - daysInMs - hoursInMs - minutesInMs
   );
 
-  return [
-    { value: years, word: 'year' },
-    { value: days, word: 'day' },
-    { value: hours, word: 'hour' },
-    { value: minutes, word: 'minute' },
-    {
-      value: seconds,
-      word: 'second',
-      addExtra: years || days || hours || minutes ? 'and' : '',
-    },
-  ];
+  return [years, days, hours, minutes, seconds];
 }
 
-console.log(formatDuration(1) === '1 second');
-console.log(formatDuration(62) === '1 minute and 2 seconds');
-console.log(formatDuration(120) === '2 minutes');
-console.log(formatDuration(3600) === '1 hour');
-console.log(formatDuration(3662) === '1 hour, 1 minute and 2 seconds');
 console.log(
-  formatDuration(205851834) ===
-    '6 years, 192 days, 13 hours, 3 minutes and 54 seconds'
+  formatDuration(132030240) === '4 years, 68 days, 3 hours and 4 minutes'
 );
+// console.log(formatDuration(1) === '1 second');
+// console.log(formatDuration(62) === '1 minute and 2 seconds');
+// console.log(formatDuration(120));
+// console.log(formatDuration(120) === '2 minutes');
+// console.log(formatDuration(3600) === '1 hour');
+// console.log(formatDuration(3662) === '1 hour, 1 minute and 2 seconds');
+// console.log(
+//   formatDuration(205851834) ===
+//     '6 years, 192 days, 13 hours, 3 minutes and 54 seconds'
+// );

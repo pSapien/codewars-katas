@@ -26,53 +26,17 @@
 \*** ===================================================================== ***/
 
 // WORKING ON IT
+const OPENING_BRACKETS = ['[', '{', '('];
+
+const moleculeMap = new Map();
 
 function parseMolecule(formula) {
-  const seperatedAtoms = seperateAtoms(formula);
+  console.log(formula);
+  const rgc = /^[A-Z](?:[a-z]|[0-9])/;
 
-  const atomsArr = seperatedAtoms.split('');
-  const obj = {};
-
-  return obj;
+  return rgc.exec(formula);
 }
 
-const isNumber = str => !isNaN(Number(str));
-
-function seperateAtoms(formula) {
-  if (!containsBrackets(formula)) return formula;
-
-  const rgx = /\[(.*)\]/;
-
-  formula;
-
-  console.log(formula.match(rgx).pop());
-
-  console.log(splitBrackets(formula));
-}
-
-const splitBrackets = str => {
-  const rgc = /^[A-Z][a-z]?[0-9]/;
-  let strArr = [];
-  if (str.includes('[')) {
-    const init = formula.indexOf('[');
-    const fin = formula.indexOf(']');
-    const betweenBracketsString = formula.substr(init, fin);
-    const beforeBracketString = formula.split(betweenBracketsString)[0];
-
-    console.log(beforeBracketString.match(rgc));
-
-    const rgx = /\[(.*)\]/;
-    console.log(beforeBracketString);
-
-    strArr = [...strArr, beforeBracketString, betweenBracketsString];
-  }
-
-  return strArr;
-};
-
-const containsBrackets = formula =>
-  formula.includes('(') || formula.includes('[') || formula.includes('{');
-
-const formula = 'K4[ON(SO3)2]2';
-const answer = parseMolecule(formula);
-answer;
+console.log(parseMolecule('H20'));
+console.log(parseMolecule('Mg(OH)2'));
+console.log(parseMolecule('K4[ON(SO3)2]2'));

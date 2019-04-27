@@ -15,9 +15,13 @@ Examples input/output:
 \*** ===================================================================== ***/
 
 function XO(str) {
-  const arr = str.toLowerCase().split('');
+  const charsRepeatedOf = numberOfRepeatedChars(str);
 
-  return numChar(arr, 'x') === numChar(arr, 'o') ? true : false;
+  return charsRepeatedOf('x') === charsRepeatedOf('o');
 }
 
-const numChar = (arr, char) => arr.filter(s => s === char).length;
+const numberOfRepeatedChars = str => char =>
+  str
+    .toLowerCase()
+    .split('')
+    .filter(s => s === char).length;

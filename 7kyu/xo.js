@@ -20,8 +20,16 @@ function XO(str) {
   return charsRepeatedOf('x') === charsRepeatedOf('o');
 }
 
-const numberOfRepeatedChars = str => char =>
-  str
-    .toLowerCase()
-    .split('')
-    .filter(s => s === char).length;
+const numberOfRepeatedChars = str => charToBeMatched => {
+  let repeatedChars = 0;
+
+  for (let char of str) {
+    if (char.toLowerCase() === charToBeMatched) {
+      repeatedChars += repeatedChars;
+    }
+  }
+
+  return repeatedChars;
+};
+
+console.log(XO('zpzpzpp'));

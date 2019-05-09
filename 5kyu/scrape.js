@@ -42,7 +42,7 @@ const solution = () =>
       const $ = cheerio.load(body);
 
       $('div.leaderboard.pan table tr').each((i, element) => {
-        
+
         if (i !== 0) {
           leaderboard.position[i] = {
             name: element.attribs['data-username'],
@@ -52,7 +52,7 @@ const solution = () =>
             honor: Number(
               element.children[3].children[0].data.replace(/,/g, '')
             ),
-          };response
+          };
         }
       });
 

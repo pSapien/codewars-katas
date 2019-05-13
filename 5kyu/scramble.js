@@ -17,30 +17,33 @@
 \*** ===================================================================== ***/
 
 function scramble(str1, str2) {
-  str1 = str1.split('');
-  str2 = str2.split('');
+  let letterCounts = {};
 
-  let isMatch = false;
-
-  for (let i = 0; i < str2.length; i++) {
-    if (str1.includes(str2[i])) {
-      isMatch = true;
-    } else {
-      isMatch = false;
-      break;
-    }
+  for (let letter of str1) {
+    letterCounts[letter] = letterCounts[letter] || 0;
+    letterCounts[letter]++;
   }
 
-  // if (str1.length === str2.length && isMatch) isMatch = false;
+  let str2ExistsInStr1 = true;
+  for (let letter of str2) {
+    const letterOfStr2IsInStr1 = letterCounts[letter] > 0;
 
-  return isMatch;
+    if (!letterOfStr2IsInStr1) {
+      str2ExistsInStr1 = false;
+      break;
+    }
+
+    letterCounts[letter]--;
+  }
+
+  return str2ExistsInStr1;
 }
 
-// const answer = scramble('rkqodlw', 'world');
-// const answer = scramble('katas', 'steak');
-// const answer = scramble('scriptjava', 'javascript');
-// const answer = scramble('scriptingjava', 'javascript');
-// const answer = scramble('scriptsjava', 'javascripts');
-
-const answer = scramble('scriptjavx', 'javascript');
-answer;
+console.log(scramble('rkqodlw', 'world'), true);
+console.log(scramble('cedewaraaossoqqyt', 'codewars'), true);
+console.log(scramble('katas', 'steak'), false);
+console.log(scramble('scriptjava', 'javascript'), true);
+console.log(scramble('scriptingjava', 'javascript'), true);
+console.log(scramble('scriptsjava', 'javascripts'), true);
+console.log(scramble('jscripts', 'javascript'), false);
+console.log(scramble('aabbcamaomsccdd', 'commas'), true);

@@ -15,33 +15,42 @@
 
 \*** ======================================================================================== ***/
 
+const getSum = arr => arr.reduce((acc, curr) => acc + curr, 0);
+
 function maxSequence(arr) {
   if (arr.length === 0) return 0;
 
-  const subArray = [];
-
+  let maxSum = 0;
   for (let i = 0; i <= arr.length; i++) {
+    const startIndex = i;
+
     for (let j = 1; j <= arr.length; j++) {
-      if (j > i) {
-        subArray.push(arr.slice(i, j));
+      const endIndex = j;
+
+      if (endIndex > startIndex) {
+        const newSum = getSum(arr.slice(startIndex, endIndex));
+
+        maxSum = Math.max(newSum, maxSum);
       }
     }
   }
 
-  const sumSubArray = [];
+  return maxSum > 0 ? maxSum : 0;
+}
 
-  for (let array of subArray) {
-    let sumOfAllArrayNums = 0;
+function maxSequence(arr) {
+  let max = 0;
 
-    for (let number of array) {
-      sumOfAllArrayNums += number;
+  for (let i = 0; i < arr.length; i++) {
+    let curr = 0;
+
+    for (let j = i; j < arr.length; j++) {
+      curr += arr[j];
+      max = Math.max(curr, max);
     }
-
-    sumSubArray.push(sumOfAllArrayNums);
   }
 
-  const maxSum = Math.max(...sumSubArray);
-  return maxSum > 0 ? maxSum : 0;
+  return max;
 }
 
 console.log(maxSequence([-2, 1, -3, 4, -1, 2, 1, -5, 4]), 6);

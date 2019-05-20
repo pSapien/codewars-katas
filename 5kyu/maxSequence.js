@@ -15,28 +15,9 @@
 
 \*** ======================================================================================== ***/
 
-const getSum = arr => arr.reduce((acc, curr) => acc + curr, 0);
+// RESEARCH :- https://en.wikipedia.org/wiki/Maximum_subarray_problem
 
-function maxSequence(arr) {
-  if (arr.length === 0) return 0;
-
-  let maxSum = 0;
-  for (let i = 0; i <= arr.length; i++) {
-    const startIndex = i;
-
-    for (let j = 1; j <= arr.length; j++) {
-      const endIndex = j;
-
-      if (endIndex > startIndex) {
-        const newSum = getSum(arr.slice(startIndex, endIndex));
-
-        maxSum = Math.max(newSum, maxSum);
-      }
-    }
-  }
-
-  return maxSum > 0 ? maxSum : 0;
-}
+// const getSum = arr => arr.reduce((acc, curr) => acc + curr, 0);
 
 function maxSequence(arr) {
   let max = 0;
@@ -48,6 +29,18 @@ function maxSequence(arr) {
       curr += arr[j];
       max = Math.max(curr, max);
     }
+  }
+
+  return max;
+}
+
+function maxSequence(arr) {
+  let max = 0;
+  let cur = 0;
+
+  for (let value of arr) {
+    cur = Math.max(0, cur + value);
+    max = Math.max(max, cur);
   }
 
   return max;

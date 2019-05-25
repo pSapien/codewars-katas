@@ -19,33 +19,24 @@
 
 \*** ======================================================================================== ***/
 
-function validParentheses(parens) {
-  if (parens.startsWith(')') || parens.endsWith('(')) return false;
+function validParentheses(brackets) {
+  const stack = [];
 
-  let openingParenCount = 0;
-  let closingParenCount = 0;
+  for (let bracket of brackets) {
+    if (bracket === '(') {
+      stack.push(bracket);
+    } else {
+      if (stack.length === 0) return false;
 
-  for (let paren of parens) {
-    if (paren === '(') openingParenCount++;
-    if (paren === ')') closingParenCount++;
+      stack.pop();
+    }
   }
 
-  return openingParenCount === closingParenCount;
+  return stack.length === 0;
 }
 
-const getCount = brackets => bracketShape =>
-  brackets.filter(bracket => bracket === bracketShape).length;
-
-function validParentheses(parens) {
-  if (parens.startsWith(')') || parens.endsWith('(')) return false;
-
-  const getCountOfShape = getCount(parens.split(''));
-
-  return getCountOfShape('(') === getCountOfShape(')');
-}
-
-// console.log(validParentheses('()')); //  true
-// console.log(validParentheses('()()((()'));
-// console.log(validParentheses(')(()))')); //  false
-// console.log(validParentheses('(')); //  false
-// console.log(validParentheses('(())((()())())')); //  true
+console.log(validParentheses('()')); //  true
+console.log(validParentheses('()()((()'));
+console.log(validParentheses(')(()))')); //  false
+console.log(validParentheses('(')); //  false
+console.log(validParentheses('(())((()())())')); //  true

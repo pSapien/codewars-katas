@@ -20,21 +20,24 @@
 \*** ======================================================================================== ***/
 
 function validParentheses(brackets) {
-  const stack = [];
+  let count = 0;
+
+  const openingBracket = '(';
 
   for (let bracket of brackets) {
-    if (bracket === '(') {
-      stack.push(bracket);
+    if (bracket === openingBracket) {
+      count++;
     } else {
-      if (stack.length === 0) return false;
+      if (count <= 0) return false;
 
-      stack.pop();
+      count--;
     }
   }
 
-  return stack.length === 0;
+  return count === 0;
 }
 
+console.log(validParentheses(')('));
 console.log(validParentheses('()')); //  true
 console.log(validParentheses('()()((()'));
 console.log(validParentheses(')(()))')); //  false

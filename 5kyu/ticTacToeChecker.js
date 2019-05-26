@@ -29,32 +29,33 @@
 // 1 => 'X'
 // 2 => 'O'
 
-// find a better solution
+const isEqual = (a, b, c) => a === b && b === c && a !== 0;
+
 function isSolved(board) {
-  let isSolved = 0;
+  for (let i = 0; i < board.length; i++) {
+    const isSolvedVertically = isEqual(board[0][i], board[1][i], board[2][i]);
+    if (isSolvedVertically) return board[0][i];
 
-  const isEqual = (a, b, c) => {
-    if (a === 0 || b === 0 || c === 0) {
-      isSolved++;
+    const isSolvedHorizontally = isEqual(board[i][0], board[i][1], board[i][2]);
+    if (isSolvedHorizontally) return board[i][0];
+  }
+
+  const isSolvedDiagonally =
+    isEqual(board[0][0], board[1][1], board[2][2]) ||
+    isEqual(board[0][2], board[1][1], board[2][0]);
+
+  if (isSolvedDiagonally) return board[1][1];
+
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board.length; j++) {
+      const isInComplete = board[i][j] === 0;
+      if (isInComplete) return -1;
     }
-    return a === b && b === c && a === c && a !== 0;
-  };
+  }
 
-  if (isEqual(board[0][0], board[0][1], board[0][2])) return board[0][0];
-  if (isEqual(board[0][0], board[1][0], board[2][0])) return board[0][0];
-  if (isEqual(board[0][0], board[1][1], board[2][2])) return board[0][0];
-
-  if (isEqual(board[0][1], board[1][1], board[2][1])) return board[0][1];
-
-  if (isEqual(board[0][2], board[1][2], board[2][2])) return board[0][2];
-
-  if (isEqual(board[1][0], board[1][1], board[1][2])) return board[1][0];
-
-  if (isEqual(board[2][0], board[2][1], board[2][2])) return board[2][0];
-
-  return isSolved > 0 ? -1 : 0;
+  return 0;
 }
 
-// console.log(isSolved([[2, 1, 2], [2, 1, 1], [1, 2, 1]]));
-// console.log(isSolved([[2, 1, 2], [2, 1, 1], [1, 2, 1]], 0));
-// console.log(isSolved([[1, 2, 1], [1, 1, 2], [2, 1, 2]], 0));
+console.log(isSolved([[2, 1, 2], [2, 1, 1], [1, 2, 1]]));
+console.log(isSolved([[2, 1, 2], [2, 1, 1], [1, 2, 1]], 0));
+console.log(isSolved([[1, 2, 1], [1, 1, 2], [2, 1, 2]], 0));

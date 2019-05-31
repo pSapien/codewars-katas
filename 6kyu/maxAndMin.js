@@ -27,47 +27,27 @@
 
 function maxAndMin(arr1, arr2) {
   let max = 0,
-    min = undefined;
+    min = Infinity;
 
   for (let first of arr1) {
     for (let second of arr2) {
-      const secondMinusFirst = second - first;
-      const firstMinusSecond = first - second;
+      const positiveDiff = Math.abs(first - second);
 
-      maxWithinDiff = Math.max(secondMinusFirst, firstMinusSecond);
-      max = Math.max(max, maxWithinDiff);
-
-      if (
-        greaterOrEqualToZero(secondMinusFirst) ||
-        greaterOrEqualToZero(firstMinusSecond)
-      ) {
-        const currentMin = getLeastPositiveInteger(
-          firstMinusSecond,
-          secondMinusFirst
-        );
-
-        if (min === undefined) min = currentMin;
-        min = Math.min(min, currentMin);
-      }
+      max = Math.max(max, positiveDiff);
+      min = Math.min(min, positiveDiff);
     }
   }
 
   return [max, min];
 }
-
-const greaterOrEqualToZero = num => num >= 0;
-
-const getLeastPositiveInteger = (num1, num2) =>
-  greaterOrEqualToZero(num1) ? num1 : num2;
-
-console.log(
-  maxAndMin(
-    [-70295, 52443, -96099, -46388, -80838],
-    [-89278, -48368, -97633, 37383, 17781, 51253]
-  ),
-  [150076, 1190]
-);
-// console.log(maxAndMin([3, 10, 5], [20, 7, 15, 8]), [17, 2]);
+// console.log(
+// maxAndMin(
+// [-70295, 52443, -96099, -46388, -80838],
+// [-89278, -48368, -97633, 37383, 17781, 51253]
+// ),
+// [150076, 1190]
+// );
+console.log(maxAndMin([3, 10, 5], [20, 7, 15, 8]), [17, 2]);
 // console.log(maxAndMin([3], [20]), [17, 17]);
 // console.log(maxAndMin([3, 10, 5], [3, 10, 5]), [7, 0]);
 // console.log(maxAndMin([1, 2, 3, 4, 5], [6, 7, 8, 9, 10]), [9, 1]);

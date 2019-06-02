@@ -11,8 +11,8 @@ Examples:
 
 
 def accum(s):
-    return '-'.join([char.upper() + char * count for count,
-                     char in enumerate(list(s.lower()))])
+    return '-'.join([char.upper() + char.lower() * count for count,
+                     char in enumerate(s)])
 
 
 accum('abcd')

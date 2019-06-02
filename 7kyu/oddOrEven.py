@@ -14,7 +14,4 @@
 
 
 def oddOrEven(arr):
-    if sum(arr) % 2 == 0:
-        return 'even'
-
-    return 'odd'
+    return 'even' if sum % 2 == 0 else 'odd'

@@ -1,4 +1,4 @@
-# adventures-in-js
+
 Solving coding challenges from codewars.com
 
 Link to profile

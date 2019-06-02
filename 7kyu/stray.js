@@ -11,15 +11,19 @@
 
 \*** ===================================================================== ***/
 
-const isNumInArr = (num, numsArr) => num === numsArr[0] && num === numsArr[1];
+function stray(numbers) {
+  numbers.sort();
 
-const stray = nums => {
-  const max = Math.max(...nums);
-  const min = Math.min(...nums);
+  const first = numbers[0];
+  const second = numbers[1];
+  const last = numbers[numbers.length - 1];
 
-  return isNumInArr(max, nums) ? min : max;
-};
+  return first === second ? last : first;
+}
 
 //ELEGANT SOLUTION
 
 const nums = () => nums.reduce((a, b) => a ^ b);
+
+console.log(stray([8, 1, 1, 1, 1, 1, 1]));
+// console.log(stray([17, 17, 3, 17, 17, 17, 17]));

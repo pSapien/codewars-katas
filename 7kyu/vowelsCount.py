@@ -7,11 +7,4 @@
 
 
 def getCount(str):
-    vowels = ['a', 'e', 'i', 'o', 'u']
-    vowelsCount = 0
-
-    for char in str:
-        if char in vowels:
-            vowelsCount += 1
-
-    return vowelsCount
+    return sum(char in 'aeiou' for lower(char) in str)

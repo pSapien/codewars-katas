@@ -28,10 +28,7 @@ def validBraces(brackets):
         if(bracket in opening_brackets):
             stack.append(bracket)
         else:
-            if len(stack) == 0:
-                return False
-
-            if stack[-1] != closing_to_opening.get(bracket):
+            if len(stack) == 0 or stack[-1] != closing_to_opening.get(bracket):
                 return False
 
             stack.pop()

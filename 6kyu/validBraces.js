@@ -30,17 +30,14 @@ function validBraces(brackets) {
 
   const stack = [];
 
-  for (let i = 0; i < brackets.length; i++) {
-    const currentBracket = brackets[i];
-
+  for (let currentBracket of brackets) {
     if (openingBrackets.includes(currentBracket)) {
       stack.push(currentBracket);
     } else {
       if (stack.length === 0) return false;
 
-      if (stack[stack.length - 1] !== matchingBrackets[currentBracket]) {
+      if (stack[stack.length - 1] !== matchingBrackets[currentBracket])
         return false;
-      }
 
       stack.pop();
     }

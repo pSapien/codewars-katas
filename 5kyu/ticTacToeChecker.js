@@ -48,8 +48,8 @@ function isSolved(board) {
 
   for (let i = 0; i < board.length; i++) {
     for (let j = 0; j < board.length; j++) {
-      const isInComplete = board[i][j] === 0;
-      if (isInComplete) return -1;
+      const isIncomplete = board[i][j] === 0;
+      if (isIncomplete) return -1;
     }
   }
 

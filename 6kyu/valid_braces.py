@@ -17,7 +17,7 @@
 '''
 
 
-def validBraces(brackets):
+def valid_braces(brackets):
     opening_brackets = '({['
     closing_brackets = ')}]'
     closing_to_opening = {']': '[', '}': '{', ')': '('}

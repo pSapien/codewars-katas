@@ -13,5 +13,5 @@
 '''
 
 
-def oddOrEven(arr):
+def odd_or_even(arr):
     return 'even' if sum % 2 == 0 else 'odd'

@@ -6,5 +6,5 @@
     '''
 
 
-def getCount(str):
+def get_count(str):
     return sum(char in 'aeiou' for lower(char) in str)

@@ -11,5 +11,4 @@
 
 
 def xo(s):
-    lowerCased = s.lower()
-    return lowerCased.count('x') == lowerCased.count('o')
+    return s.lower().count('x') == s.lower().count('o')

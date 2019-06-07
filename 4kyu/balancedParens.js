@@ -13,37 +13,29 @@
     balancedParens(3) => ["()()()","(())()","()(())","(()())","((()))"]
 \*** ===================================================================== ***/
 
-const OPENING_BRACKET = '(';
-const CLOSING_BRACKET = ')';
-
 function balancedParens(n) {
-  if (n === 0) return [];
+  let parens = [];
 
-  return generateParens('', n, 0);
-}
+  function generateParens(curr, numOpening, numClosing) {
+    if (numOpening === 0 && numClosing === 0) {
+      parens.push(curr);
+    }
 
-function generateParens(curr, numOpening, numClosing) {
-  if (numOpening === 0) {
-    const closeParens = CLOSING_BRACKET.repeat(numClosing);
+    if (numOpening > 0) {
+      generateParens(curr + '(', numOpening - 1, numClosing + 1);
+    }
 
-    return [curr + closeParens];
+    if (numClosing > 0) {
+      generateParens(curr + ')', numOpening, numClosing - 1);
+    }
   }
 
-  if (numClosing === 0) {
-    return generateParens(
-      curr + OPENING_BRACKET,
-      numOpening - 1,
-      numClosing + 1
-    );
-  }
+  generateParens('', n, 0);
 
-  return (
-    generateParens(curr + OPENING_BRACKET, numOpening - 1, numClosing + 1) +
-    generateParens(curr + CLOSING_BRACKET, numOpening, numClosing - 1)
-  );
+  return parens;
 }
 
-console.log(balancedParens(0));
+// console.log(balancedParens(0));
 console.log(balancedParens(1));
 console.log(balancedParens(2));
 // console.log(balancedParens(3));

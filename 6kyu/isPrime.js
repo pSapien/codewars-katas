@@ -18,24 +18,12 @@ Per wikipedia, a prime number (or a prime) is a natural number greater than 1 th
 \*** ===================================================================== ***/
 
 function isPrime(num) {
-  if (num === 1 || num === -1) {
-    return false;
+  if (num < 2) return false;
+
+  const squareRoot = Math.sqrt(num);
+  for (let i = 2; i <= squareRoot; i++) {
+    if (num % i === 0) return false;
   }
 
-  const multipliers = [2, 3, 5, 7];
-
-  let isPrime = true;
-  for (let multiplier of multipliers) {
-    if (num === multiplier) {
-      return isPrime;
-    }
-
-    if (num % multiplier === 0) {
-      isPrime = false;
-
-      return isPrime;
-    }
-  }
-
-  return isPrime;
+  return true;
 }

@@ -1,5 +1,5 @@
 
-Solving coding challenges from codewars.com
+Solved coding challenges from codewars.com
 
 Link to profile
 

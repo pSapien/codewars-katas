@@ -7,16 +7,17 @@
 
 '''
 
-ZEROS = ['0', 0]
+
 
 def move_zeros(arr):
   without_zeros = []
   with_zeros = []
 
   for num in arr:
-    if num in ZEROS:
-      with_zeros.append(num)
-    else:
-      without_zeros.append(num)
+    isZero = num == 0
+    isInt = type(num) == int
+    isFloat = type(num) == float
+
+    with_zeros.append(num) if isZero and isInt or isFloat else without_zeros.append(num) 
     
   return without_zeros + with_zeros

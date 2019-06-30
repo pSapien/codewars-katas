@@ -29,18 +29,18 @@ def diamond(n):
     return None
 
   res = [None] * n
-  mid_point = (n - 1) / 2
+  mid_point = int((n - 1) / 2)
 
   num_stars = n
   num_spaces = 0
+
   for i in range(mid_point + 1)[::-1]:
-    stars = stars_with_spaces(num_stars, num_spaces) 
-    res[i] = stars
+    stars = stars_with_spaces(num_stars, num_spaces)
+
+    res[mid_point - num_spaces] = stars
+    res[mid_point + num_spaces] = stars
+
     num_spaces += 1 
     num_stars -= 2
-
-  for (i, elem) in enumerate(res):
-    if elem is None:
-      res[i] = res[n - i - 1]
   
   return ('').join(res)

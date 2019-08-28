@@ -1,6 +1,5 @@
 
 Solved coding challenges from codewars.com
 
-Link to profile
 
-https://www.codewars.com/users/Unsung-crusader/stats
+(Codewars Profile)[https://www.codewars.com/users/Unsung-crusader/stats]
